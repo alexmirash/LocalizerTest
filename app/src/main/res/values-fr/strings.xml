@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LocalizerTest</string>
+    <string name="lang_text">French</string>
+    <string name="cancel">(fr) Cabcel</string>
+    <string name="ok">(fr) Ok</string>
+    <string name="change_lang">(fr)Change language?</string>
+</resources>

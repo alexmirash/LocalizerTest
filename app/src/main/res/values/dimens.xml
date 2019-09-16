@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="side_padding">16dp</dimen>
+    <dimen name="side_half_padding">8dp</dimen>
+    <dimen name="minor_padding">5dp</dimen>
+    <dimen name="small_padding">12dp</dimen>
+    <dimen name="side_medium_padding">20dp</dimen>
+    <dimen name="large_padding">24dp</dimen>
+    <dimen name="double_padding">32dp</dimen>
+    <dimen name="huge_padding">64dp</dimen>
+
+    <!-- text sizes -->
+    <dimen name="text_size_page_title">22dp</dimen>
+    <dimen name="title_text_size">18dp</dimen>
+    <dimen name="default_text_size">16dp</dimen>
+    <dimen name="medium_text_size">14dp</dimen>
+    <dimen name="small_text_size">12dp</dimen>
+</resources>

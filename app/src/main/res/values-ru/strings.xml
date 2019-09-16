@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LocalizerTest</string>
+    <string name="lang_text">паРашка</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">Холосо</string>
+    <string name="change_lang">Сменить язык?</string>
+</resources>
