@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void applyOverrideConfiguration(Configuration overrideConfiguration) {
-        if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT <= 25) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
             getResources().getConfiguration().setTo(overrideConfiguration);
         }
         super.applyOverrideConfiguration(overrideConfiguration);
@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         applyLangButtonClickListener(R.id.button_french, UserLanguage.FRENCH);
         applyLangButtonClickListener(R.id.button_rus, UserLanguage.RUS);
         applyLangButtonClickListener(R.id.button_ua, UserLanguage.UKRAINE);
+        applyLangButtonClickListener(R.id.button_zh_simple, UserLanguage.CHINESE_SIMPLIFIED);
+        applyLangButtonClickListener(R.id.button_zh_traditional, UserLanguage.CHINESE_TRADITIONAL);
     }
 
     private void applyLangButtonClickListener(@IdRes int buttonId, @NonNull UserLanguage language) {

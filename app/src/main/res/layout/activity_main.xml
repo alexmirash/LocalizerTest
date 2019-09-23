@@ -43,5 +43,17 @@
             android:layout_height="wrap_content"
             android:text="Українська"
             />
+        <RadioButton
+            android:id="@+id/button_zh_simple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chinese Simplified"
+            />
+        <RadioButton
+            android:id="@+id/button_zh_traditional"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chinese Traditional"
+            />
     </RadioGroup>
 </FrameLayout>

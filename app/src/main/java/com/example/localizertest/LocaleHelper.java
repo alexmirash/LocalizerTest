@@ -29,23 +29,23 @@ public class LocaleHelper {
 
     public static void updateLocale(Context context, UserLanguage language) {
         Log.d(TAG, "updateLocale: " + language.getLanguageId());
-        LocaleHelper.setLocale(LocalApp.getInstance(), language.getLocale());
+        LocaleHelper.setLocale(LocalApp.getInstance(), language);
         LocaleHelper.persistLanguageId(context, language.getLanguageId());
     }
 
     public static Context onAttach(Context context) {
         String languageId = getPersistedLanguageId(context);
         Log.d(TAG, "onAttach: " + languageId);
-        String locale;
+        UserLanguage userLanguage;
         if (languageId == null) {
-            locale = getUserLanguageFromPhoneLocale().getLocale();
+            userLanguage = getUserLanguageFromPhoneLocale();
         } else {
-            locale = UserLanguage.getLanguageByLanguageId(languageId).getLocale();
+            userLanguage = UserLanguage.getLanguageByLanguageId(languageId);
         }
-        return setLocale(context, locale);
+        return setLocale(context, userLanguage);
     }
 
-    private static Context setLocale(Context context, String language) {
+    private static Context setLocale(Context context, UserLanguage language) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return updateResources(context, language);
         }
@@ -84,11 +84,12 @@ public class LocaleHelper {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private static Context updateResources(Context context, String language) {
+    private static Context updateResources(Context context, UserLanguage language) {
         Log.d(TAG, "setLocale updateResources: " + language);
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-        Locale locale = createLocaleWithCountry(language, configuration.getLocales().get(0));
+        Locale locale = language.getLocale(configuration.getLocales().get(0).getCountry());
+        Locale.setDefault(locale);
         configuration.setLocale(locale);
         configuration.setLayoutDirection(locale);
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
@@ -96,11 +97,11 @@ public class LocaleHelper {
     }
 
     @SuppressWarnings("deprecation")
-    private static Context updateResourcesLegacy(Context context, String language) {
+    private static Context updateResourcesLegacy(Context context, UserLanguage language) {
         Log.d(TAG, "setLocale updateResourcesLegacy: " + language);
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-        Locale locale = createLocaleWithCountry(language, configuration.locale);
+        Locale locale = language.getLocale(configuration.locale.getCountry());
         configuration.setLocale(locale);
         configuration.locale = locale;
         configuration.setLayoutDirection(locale);
@@ -108,17 +109,11 @@ public class LocaleHelper {
         return context;
     }
 
-    private static Locale createLocaleWithCountry(String language, Locale currentLocale) {
-        Locale locale = new Locale(language, currentLocale.getCountry());
-        Locale.setDefault(locale);
-        return locale;
-    }
-
     public static String getSupportedLocalesStr() {
         UserLanguage[] userLanguages = UserLanguage.values();
         List<String> locales = new ArrayList<>(userLanguages.length);
         for (UserLanguage language : userLanguages) {
-            locales.add(language.getLocale());
+            locales.add(language.getLanguageCode());
         }
         Collections.sort(locales);
         return TextUtils.join(",", locales);

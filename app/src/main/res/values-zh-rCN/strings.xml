@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LocalizerTest</string>
+    <string name="lang_text">Chinese Simplified (zh-rCN)</string>
+    <string name="cancel">Cancel (zh-rCN)</string>
+    <string name="ok">Ok (zh-rCN)</string>
+    <string name="change_lang">Change language? (zh-rCN)</string>
+</resources>
