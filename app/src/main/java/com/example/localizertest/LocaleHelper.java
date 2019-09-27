@@ -104,6 +104,8 @@ public class LocaleHelper {
         Locale locale = language.getLocale(configuration.locale);
         configuration.setLocale(locale);
         configuration.locale = locale;
+        int layoutDirection = TextUtils.getLayoutDirectionFromLocale(locale);
+        Log.d(TAG, "localeDirection = " + layoutDirection);
         configuration.setLayoutDirection(locale);
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         return context;

@@ -4,12 +4,17 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale;
+
+import static android.text.TextUtils.getLayoutDirectionFromLocale;
 
 /**
  * @author Mirash
@@ -25,8 +30,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void applyOverrideConfiguration(Configuration overrideConfiguration) {
+        //TODO thx google, u're awesome
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
-            getResources().getConfiguration().setTo(overrideConfiguration);
+            Configuration configuration = getResources().getConfiguration();
+            configuration.setTo(overrideConfiguration);
+            configuration.setLayoutDirection(LocaleHelper.getCurrentLanguage(this).getLocale(null));
         }
         super.applyOverrideConfiguration(overrideConfiguration);
     }

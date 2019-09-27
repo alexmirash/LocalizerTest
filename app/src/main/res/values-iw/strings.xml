@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LocalizerTest</string>
+    <string name="lang_text">ובמצלפיכך</string>
+    <string name="cancel">Відхилити</string>
+    <string name="ok">Так</string>
+    <string name="change_lang">Змінити мову?</string>
+</resources>
