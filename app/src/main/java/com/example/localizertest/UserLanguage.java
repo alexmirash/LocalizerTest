@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Locale;
-import java.util.Random;
 
 /**
  * @author Mirash
@@ -23,33 +22,38 @@ public enum UserLanguage {
             return "fr";
         }
     },
-    RUS {
+    SPAIN {
         @Override
         public String getLanguageCode() {
-            return "ru";
+            return "es";
         }
     },
-    UKRAINE {
+    HEBREW {
         @Override
         public String getLanguageCode() {
-            return "ua";
+            return "iw";
         }
     },
     CHINESE_SIMPLIFIED {
-        @Override
-        public String getLanguageCode() {
-            return "zh";
-        }
-
         @Override
         public String getLanguageId() {
             return "zh_CN";
         }
 
+        @Override
+        public String getLanguageCode() {
+            return "zh";
+        }
+
         @NonNull
         @Override
-        public Locale getLocale(String country) {
+        public Locale getLocale(Locale currentLocale) {
             return Locale.SIMPLIFIED_CHINESE;
+        }
+
+        @Override
+        public String getName() {
+            return "简体中文";
         }
     },
     CHINESE_TRADITIONAL {
@@ -65,8 +69,13 @@ public enum UserLanguage {
 
         @NonNull
         @Override
-        public Locale getLocale(String country) {
+        public Locale getLocale(Locale currentLocale) {
             return Locale.TRADITIONAL_CHINESE;
+        }
+
+        @Override
+        public String getName() {
+            return "繁體中文";
         }
     };
 
@@ -96,24 +105,25 @@ public enum UserLanguage {
         return ENGLISH;
     }
 
-    public static UserLanguage random() {
-        return values()[new Random().nextInt(values().length)];
+    @NonNull
+    public Locale getLocale(Locale currentLocale) {
+        return new Locale(getLanguageCode(), currentLocale == null ? "" : currentLocale.getCountry());
     }
-
-    public abstract String getLanguageCode();
-
 
     public String getLanguageId() {
         return getLanguageCode();
     }
 
-    @NonNull
-    public Locale getLocale(String country) {
-        return new Locale(getLanguageCode(), country);
+    public abstract String getLanguageCode();
+
+    public String getName() {
+        return LocaleHelper.getDisplayLanguage(getLocale(null));
     }
 
+    @NonNull
     @Override
     public String toString() {
-        return LocaleHelper.getDisplayLanguage(getLanguageCode());
+        return LocaleHelper.getDisplayLanguage(getLocale(null));
     }
 }
+

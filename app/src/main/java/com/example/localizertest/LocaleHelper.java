@@ -88,7 +88,7 @@ public class LocaleHelper {
         Log.d(TAG, "setLocale updateResources: " + language);
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-        Locale locale = language.getLocale(configuration.getLocales().get(0).getCountry());
+        Locale locale = language.getLocale(configuration.getLocales().get(0));
         Locale.setDefault(locale);
         configuration.setLocale(locale);
         configuration.setLayoutDirection(locale);
@@ -101,7 +101,7 @@ public class LocaleHelper {
         Log.d(TAG, "setLocale updateResourcesLegacy: " + language);
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
-        Locale locale = language.getLocale(configuration.locale.getCountry());
+        Locale locale = language.getLocale(configuration.locale);
         configuration.setLocale(locale);
         configuration.locale = locale;
         configuration.setLayoutDirection(locale);
@@ -138,12 +138,8 @@ public class LocaleHelper {
         return language;
     }
 
-    public static String getDisplayLanguage(@NonNull String language) {
-        return getDisplayLanguage(new Locale(language));
-    }
-
     public static String getDisplayLanguage(@NonNull Locale locale) {
-        return capitalizeFirstLetter(locale.getDisplayLanguage(locale));
+        return capitalizeFirstLetter(locale.getDisplayName(locale));
     }
 
     public static String capitalizeFirstLetter(String str) {

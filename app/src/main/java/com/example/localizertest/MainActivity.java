@@ -8,7 +8,6 @@ import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * @author Mirash
  */
 public class MainActivity extends AppCompatActivity {
+    private RadioGroup radioGroup;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -37,21 +37,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         UserLanguage lang = LocaleHelper.getCurrentLanguage(this);
 
-        RadioGroup radioGroup = findViewById(R.id.radio_group);
+        radioGroup = findViewById(R.id.radio_group);
         radioGroup.post(() -> {
             RadioButton button = (RadioButton) radioGroup.getChildAt(lang.ordinal());
             button.setChecked(true);
         });
-        applyLangButtonClickListener(R.id.button_eng, UserLanguage.ENGLISH);
-        applyLangButtonClickListener(R.id.button_french, UserLanguage.FRENCH);
-        applyLangButtonClickListener(R.id.button_rus, UserLanguage.RUS);
-        applyLangButtonClickListener(R.id.button_ua, UserLanguage.UKRAINE);
-        applyLangButtonClickListener(R.id.button_zh_simple, UserLanguage.CHINESE_SIMPLIFIED);
-        applyLangButtonClickListener(R.id.button_zh_traditional, UserLanguage.CHINESE_TRADITIONAL);
+        applyLangButtonClickListener(UserLanguage.ENGLISH);
+        applyLangButtonClickListener(UserLanguage.SPAIN);
+        applyLangButtonClickListener(UserLanguage.FRENCH);
+        applyLangButtonClickListener(UserLanguage.HEBREW);
+        applyLangButtonClickListener(UserLanguage.CHINESE_SIMPLIFIED);
+        applyLangButtonClickListener(UserLanguage.CHINESE_TRADITIONAL);
     }
 
-    private void applyLangButtonClickListener(@IdRes int buttonId, @NonNull UserLanguage language) {
-        findViewById(buttonId).setOnClickListener(v ->
+    private void applyLangButtonClickListener(@NonNull UserLanguage language) {
+        RadioButton button = new RadioButton(this);
+        radioGroup.addView(button);
+        button.setText(language.getName());
+        button.setOnClickListener(v ->
                 LocaleHelper.checkUpdateLanguageId(MainActivity.this, language, result -> {
                     if (result) {
                         recreate();

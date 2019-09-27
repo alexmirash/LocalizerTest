@@ -18,42 +18,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        >
-        <RadioButton
-            android:id="@+id/button_eng"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enligsh"
-            />
-        <RadioButton
-            android:id="@+id/button_french"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="French"
-            />
-        <RadioButton
-            android:id="@+id/button_rus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Кацапська"
-            />
-        <RadioButton
-            android:id="@+id/button_ua"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Українська"
-            />
-        <RadioButton
-            android:id="@+id/button_zh_simple"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chinese Simplified"
-            />
-        <RadioButton
-            android:id="@+id/button_zh_traditional"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chinese Traditional"
-            />
-    </RadioGroup>
+        />
 </FrameLayout>
