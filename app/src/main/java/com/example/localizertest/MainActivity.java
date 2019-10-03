@@ -4,17 +4,13 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.Locale;
-
-import static android.text.TextUtils.getLayoutDirectionFromLocale;
 
 /**
  * @author Mirash
@@ -30,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void applyOverrideConfiguration(Configuration overrideConfiguration) {
-        //TODO thx google, u're awesome
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
             Configuration configuration = getResources().getConfiguration();
             configuration.setTo(overrideConfiguration);
@@ -41,21 +36,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setLayoutDirection(LocaleHelper.isConfigLTR(getResources())
+                ? View.LAYOUT_DIRECTION_LTR : View.LAYOUT_DIRECTION_RTL);
         setContentView(R.layout.activity_main);
-        UserLanguage lang = LocaleHelper.getCurrentLanguage(this);
-
+        super.onCreate(savedInstanceState);
         radioGroup = findViewById(R.id.radio_group);
-        radioGroup.post(() -> {
-            RadioButton button = (RadioButton) radioGroup.getChildAt(lang.ordinal());
-            button.setChecked(true);
-        });
-        applyLangButtonClickListener(UserLanguage.ENGLISH);
-        applyLangButtonClickListener(UserLanguage.SPAIN);
-        applyLangButtonClickListener(UserLanguage.FRENCH);
-        applyLangButtonClickListener(UserLanguage.HEBREW);
-        applyLangButtonClickListener(UserLanguage.CHINESE_SIMPLIFIED);
-        applyLangButtonClickListener(UserLanguage.CHINESE_TRADITIONAL);
+        radioGroup.post(this::selectActualButton);
+        for (UserLanguage language : UserLanguage.values()) {
+            applyLangButtonClickListener(language);
+        }
+    }
+
+    private void selectActualButton() {
+        UserLanguage lang = LocaleHelper.getCurrentLanguage(this);
+        RadioButton button = (RadioButton) radioGroup.getChildAt(lang.ordinal());
+        button.setChecked(true);
     }
 
     private void applyLangButtonClickListener(@NonNull UserLanguage language) {
@@ -66,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
                 LocaleHelper.checkUpdateLanguageId(MainActivity.this, language, result -> {
                     if (result) {
                         recreate();
+/*                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);*/
+                    } else {
+                        selectActualButton();
                     }
                 }));
     }

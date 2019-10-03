@@ -1,7 +1,6 @@
 package com.example.localizertest;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -9,10 +8,12 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.LayoutDirection;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,7 +84,7 @@ public class LocaleHelper {
         return UserLanguage.getLanguageByLanguageId(languageId);
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private static Context updateResources(Context context, UserLanguage language) {
         Log.d(TAG, "setLocale updateResources: " + language);
         Resources resources = context.getResources();
@@ -92,11 +93,10 @@ public class LocaleHelper {
         Locale.setDefault(locale);
         configuration.setLocale(locale);
         configuration.setLayoutDirection(locale);
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+//        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         return context.createConfigurationContext(configuration);
     }
 
-    @SuppressWarnings("deprecation")
     private static Context updateResourcesLegacy(Context context, UserLanguage language) {
         Log.d(TAG, "setLocale updateResourcesLegacy: " + language);
         Resources resources = context.getResources();
@@ -173,5 +173,9 @@ public class LocaleHelper {
                         }
                     }).show();
         }
+    }
+
+    public static boolean isConfigLTR(Resources res) {
+        return res.getConfiguration().getLayoutDirection() == LayoutDirection.LTR;
     }
 }

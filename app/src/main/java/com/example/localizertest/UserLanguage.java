@@ -22,12 +22,6 @@ public enum UserLanguage {
             return "fr";
         }
     },
-    SPAIN {
-        @Override
-        public String getLanguageCode() {
-            return "es";
-        }
-    },
     HEBREW {
         @Override
         public String getLanguageCode() {
