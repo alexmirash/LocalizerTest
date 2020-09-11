@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
@@ -11,6 +12,8 @@ import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale;
 
 /**
  * @author Mirash
@@ -29,7 +32,14 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
             Configuration configuration = getResources().getConfiguration();
             configuration.setTo(overrideConfiguration);
-            configuration.setLayoutDirection(LocaleHelper.getCurrentLanguage(this).getLocale(null));
+            Locale locale = LocaleHelper.getCurrentLanguage(this).getLocale(null);
+            configuration.setLayoutDirection(locale);
+            if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                Locale currentLocale = configuration.getLocales().get(0);
+                if (currentLocale == null) {
+                    getResources().getConfiguration().setLocales(new LocaleList(locale));
+                }
+            }
         }
         super.applyOverrideConfiguration(overrideConfiguration);
     }

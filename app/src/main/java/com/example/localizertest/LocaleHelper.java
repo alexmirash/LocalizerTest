@@ -1,6 +1,7 @@
 package com.example.localizertest;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -13,7 +14,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,7 +84,7 @@ public class LocaleHelper {
         return UserLanguage.getLanguageByLanguageId(languageId);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    @TargetApi(Build.VERSION_CODES.N)
     private static Context updateResources(Context context, UserLanguage language) {
         Log.d(TAG, "setLocale updateResources: " + language);
         Resources resources = context.getResources();
@@ -93,7 +93,7 @@ public class LocaleHelper {
         Locale.setDefault(locale);
         configuration.setLocale(locale);
         configuration.setLayoutDirection(locale);
-//        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         return context.createConfigurationContext(configuration);
     }
 
@@ -102,10 +102,9 @@ public class LocaleHelper {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
         Locale locale = language.getLocale(configuration.locale);
+        Locale.setDefault(locale);
         configuration.setLocale(locale);
         configuration.locale = locale;
-        int layoutDirection = TextUtils.getLayoutDirectionFromLocale(locale);
-        Log.d(TAG, "localeDirection = " + layoutDirection);
         configuration.setLayoutDirection(locale);
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         return context;
