@@ -11,14 +11,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.Locale;
 
 /**
  * @author Mirash
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
     private RadioGroup radioGroup;
 
     @Override
@@ -71,9 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 LocaleHelper.checkUpdateLanguageId(MainActivity.this, language, result -> {
                     if (result) {
                         recreate();
-/*                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);*/
                     } else {
                         selectActualButton();
                     }
